@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/config/supabase_config.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -19,14 +20,11 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _checkAuth() async {
     await Future.delayed(const Duration(seconds: 2));
     
-    final session = Supabase.instance.client.auth.currentSession;
-    
-    if (mounted) {
-      if (session != null) {
-        context.go('/home');
-      } else {
-        context.go('/login');
-      }
+    // Modo demo: Ir directo al home
+    if (SupabaseConfig.isDemoMode || Supabase.instance.client.auth.currentSession != null) {
+      if (mounted) context.go('/home');
+    } else {
+      if (mounted) context.go('/login');
     }
   }
 
@@ -56,6 +54,13 @@ class _SplashPageState extends State<SplashPage> {
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Demo Mode',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 48),
