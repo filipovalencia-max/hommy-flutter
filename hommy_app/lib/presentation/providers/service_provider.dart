@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/models/service_model.dart';
-import '../data/repositories/service_repository.dart';
+import '../../data/models/service_model.dart';
+import '../../data/repositories/service_repository.dart';
 
 // Repository provider
 final serviceRepositoryProvider = Provider((ref) => ServiceRepository());

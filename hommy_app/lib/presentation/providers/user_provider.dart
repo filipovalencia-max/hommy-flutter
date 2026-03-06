@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/models/user_model.dart';
-import '../data/models/worker_profile_model.dart';
-import '../data/repositories/user_repository.dart';
+import '../../data/models/user_model.dart';
+import '../../data/models/worker_profile_model.dart';
+import '../../data/repositories/user_repository.dart';
 
 // Repository provider
 final userRepositoryProvider = Provider((ref) => UserRepository());
