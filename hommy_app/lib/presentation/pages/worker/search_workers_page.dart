@@ -2,19 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 
-class SearchWorkersPage extends StatefulWidget {
+class SearchWorkersPage extends StatelessWidget {
   const SearchWorkersPage({super.key});
-
-  @override
-  State<SearchWorkersPage> createState() => _SearchWorkersPageState();
-}
-
-class _SearchWorkersPageState extends State<SearchWorkersPage> {
-  final List<Map<String, dynamic>> _workers = [
-    {'name': 'Carlos García', 'profession': 'Electricista', 'rating': 4.9, 'services': 156, 'price': 25},
-    {'name': 'María López', 'profession': 'Limpiadora', 'rating': 4.8, 'services': 203, 'price': 18},
-    {'name': 'Juan Pérez', 'profession': 'Pintor', 'rating': 4.7, 'services': 89, 'price': 22},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,27 +22,46 @@ class _SearchWorkersPageState extends State<SearchWorkersPage> {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: TextField(
+                  decoration: InputDecoration(hintText: 'Buscar...', prefixIcon: const Icon(Icons.search), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+                ),
+              ),
+              const SizedBox(height: 16),
               Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: _workers.length,
-                  itemBuilder: (context, index) {
-                    final w = _workers[index];
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: ListTile(
-                        leading: CircleAvatar(backgroundColor: AppColors.primary.withOpacity(0.1), child: Text(w['name'][0], style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold))),
-                        title: Text(w['name']),
-                        subtitle: Text('${w['profession']} • ⭐ ${w['rating']}'),
-                        trailing: Text('\$${w['price']}/hr', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
-                      ),
-                    );
-                  },
+                child: ListView(
+                  children: [
+                    _WorkerCard(name: 'Carlos García', profession: 'Electricista', rating: 4.9, services: 156, price: 25),
+                    _WorkerCard(name: 'María López', profession: 'Limpiadora', rating: 4.8, services: 203, price: 18),
+                    _WorkerCard(name: 'Juan Pérez', profession: 'Pintor', rating: 4.7, services: 89, price: 22),
+                    _WorkerCard(name: 'Ana Martínez', profession: 'Plomera', rating: 4.9, services: 134, price: 30),
+                  ],
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _WorkerCard extends StatelessWidget {
+  final String name, profession;
+  final double rating;
+  final int services, price;
+  const _WorkerCard({required this.name, required this.profession, required this.rating, required this.services, required this.price});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: ListTile(
+        leading: CircleAvatar(backgroundColor: AppColors.primary.withOpacity(0.1), child: Text(name[0], style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold))),
+        title: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
+        subtitle: Text('$profession • ⭐ $rating ($services srv)'),
+        trailing: Text('\$$price/hr', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../data/models/service_model.dart';
 
 class CreateServicePage extends StatefulWidget {
   const CreateServicePage({super.key});
@@ -36,7 +35,6 @@ class _CreateServicePageState extends State<CreateServicePage> {
   void _createService() {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
-    
     Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
